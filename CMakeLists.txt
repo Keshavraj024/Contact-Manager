@@ -12,7 +12,6 @@ qt_standard_project_setup(REQUIRES 6.8)
 set(PROJECT_SOURCES
     main.cpp
     Source/Models/Contact.h Source/Models/Contact.cpp
-    Source/AudioRecorder.h Source/AudioRecorder.cpp
     Source/Models/ContactListModel.h Source/Models/ContactListModel.cpp
     Source/Managers/ContactManager.h Source/Managers/ContactManager.cpp
 )
