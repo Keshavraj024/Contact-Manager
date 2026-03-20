@@ -154,8 +154,6 @@ Page {
                         width: contactListView.width
                         height: 80
 
-
-
                         dataModel: model
 
                         onClicked: {
