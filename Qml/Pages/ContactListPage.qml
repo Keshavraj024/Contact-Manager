@@ -12,10 +12,10 @@ Page {
     property int favoritesContacts: 0
 
 
-    signal contactSelected(int index)
+    signal viewContact(int index, Item item)
     signal addContactRequested()
-    signal deleteRequested(int index,  string fullName, string initials, string avatarColor)
-    signal editRequested(int index)
+    signal deleteRequested(int index, Item item)
+    signal editRequested(int index, Item item)
 
     background: Rectangle {
         color: "#F9FAFB"
@@ -131,22 +131,36 @@ Page {
                     visible: root.proxyModel.count > 0
                     model: root.proxyModel
 
+                    Component {
+                        id: sectionHeading
+                        Rectangle {
+                            width: sectionText.width + 10
+                            height: sectionText.height + 2
+                            x: 2
+
+                            required property string section
+
+                            Text {
+                                id: sectionText
+                                text: parent.section
+                                font.bold: true
+                                font.pixelSize: 20
+                            }
+                        }
+                    }
+
                     delegate: ContactDelegate {
 
                         width: contactListView.width
                         height: 80
 
-                        property int sourceIndex: root.proxyModel.mapToSourceIndex(index)
 
-                        firstName: model.firstName
-                        lastName: model.lastName
-                        email: model.email
-                        isFavorite: model.isFavorite
-                        avatarColor: model.avatarColor
-                        tags: model.tags
+
+                        dataModel: model
 
                         onClicked: {
-                            root.contactSelected(sourceIndex)
+                            const modelData = contactListView.itemAtIndex(index)
+                            root.viewContact(index, modelData)
                         }
 
                         onFavoriteToggled: function(isToggled){
@@ -154,14 +168,22 @@ Page {
                         }
 
                         onDeleteRequested: function() {
-                            root.deleteRequested(sourceIndex, model.fullName, model.initials, model.avatarColor)
+                            const modelData = contactListView.itemAtIndex(index)
+                            root.deleteRequested(index, modelData)
                         }
 
                         onEditRequested: function() {
-                            root.editRequested(sourceIndex)
+                            const modelData = contactListView.itemAtIndex(index)
+                            root.editRequested(index, modelData)
                         }
 
                     }
+
+                    section.property: "firstName"
+                    section.criteria: ViewSection.FirstCharacter
+                    section.delegate: sectionHeading
+
+
                     ScrollBar.vertical: ScrollBar {
                         policy: ScrollBar.AsNeeded
                         background: Rectangle {

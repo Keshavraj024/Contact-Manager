@@ -20,11 +20,11 @@ Dialog {
 
     signal deleteConfirmed(int index)
 
-    function setContact(index, fullName, initials, avatarColor) {
+    function setContact(index, item) {
         contactIndex = index
-        contactName = fullName
-        contactInitials = initials
-        contactAvatarColor = avatarColor || "#6366F1"
+        contactName = item.firstName + " " + item.lastName
+        contactInitials = item.initials
+        contactAvatarColor = item.avatarColor || "#6366F1"
     }
 
     background: Rectangle {

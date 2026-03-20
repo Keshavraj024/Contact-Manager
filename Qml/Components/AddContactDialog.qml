@@ -168,7 +168,7 @@ Dialog {
                     Layout.fillWidth: true
                     spacing: 6
                     Text {
-                        text: "First Name"
+                        text: 'First Name <font color="red">*</font>'
                         font.pixelSize: 13
                         font.weight: Font.Medium
                         color: "#374151"
@@ -188,7 +188,7 @@ Dialog {
                     Layout.fillWidth: true
                     spacing: 6
                     Text {
-                        text: "Last Name"
+                        text: 'Last Name <font color="red">*</font>'
                         font.pixelSize: 13
                         font.weight: Font.Medium
                         color: "#374151"
@@ -576,7 +576,7 @@ Dialog {
                 spacing: 12
 
                 Text {
-                    text: "* First or Last name required"
+                    text: '<font color="red">*</font> Mandatory Fields'
                     font.pixelSize: 12
                     font.bold: true
                     color: "#9CA3AF"

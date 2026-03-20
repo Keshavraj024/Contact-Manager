@@ -63,14 +63,18 @@ ApplicationWindow {
 
     ContactListPage {
         anchors.fill: parent
+
+        property int sourceIndex: -1
+
         proxyModel: contactManager?.proxyModel ?? null
         totalContacts: contactManager?.totalContacts ?? 0
         favoritesContacts: contactManager?.favoritesContacts ?? 0
 
-        onContactSelected: function(index){
-            var contact = contactManager.getContact(index)
-            console.log("Contact selected:", contact.firstName)
-            viewContactDialog.loadContact(index, contact)
+
+        onViewContact: function(index, modelData){
+            console.log("Contact selected:", modelData.dataModel.firstName)
+            sourceIndex = proxyModel.mapToSourceIndex(index)
+            viewContactDialog.loadContact(sourceIndex, modelData.dataModel)
             viewContactDialog.open()
         }
 
@@ -79,14 +83,15 @@ ApplicationWindow {
             addContactDialog.open()
         }
 
-        onDeleteRequested: function(index, fullName, initials, avatarColor) {
-            deleteConfirmationDialog.setContact(index, fullName, initials, avatarColor)
+        onDeleteRequested: function(index, modelData) {
+            sourceIndex = proxyModel.mapToSourceIndex(index)
+            deleteConfirmationDialog.setContact(sourceIndex, modelData.dataModel)
             deleteConfirmationDialog.open()
         }
 
-        onEditRequested: function(contactIndex) {
-            var contact = contactManager.getContact(contactIndex)
-            editContactDialog.loadContact(contactIndex, contact)
+        onEditRequested: function(index, modelData) {
+            sourceIndex = proxyModel.mapToSourceIndex(index)
+            editContactDialog.loadContact(sourceIndex, modelData.dataModel)
             editContactDialog.open()
         }
 

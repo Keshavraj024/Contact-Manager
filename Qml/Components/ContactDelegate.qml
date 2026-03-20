@@ -5,12 +5,14 @@ import QtQuick.Layouts
 SwipeDelegate {
     id: root
 
-    property string firstName: ""
-    property string lastName: ""
-    property string email: ""
-    property bool isFavorite: false
-    property string avatarColor: "#6366F1"
-    property var tags: []
+    property var dataModel : []
+    property string firstName: dataModel?.firstName ?? ""
+    property string lastName: dataModel?.lastName ?? ""
+    property string email: dataModel?.email ?? ""
+    property string initials: dataModel?.initials ?? ""
+    property bool isFavorite: dataModel?.isFavorite ?? false
+    property string avatarColor: dataModel?.avatarColor ?? "#6366F1"
+    property var tags: dataModel?.tags ?? []
 
     signal favoriteToggled(bool isToggled)
     signal deleteRequested()
@@ -131,13 +133,10 @@ SwipeDelegate {
             color: root.avatarColor
             Text {
                 anchors.centerIn: parent
-                text: (root.firstName ? root.firstName[0].toUpperCase() : "") +
-                      (root.lastName ? root.lastName[0].toUpperCase() : "")
+                text: root.initials
                 font.pixelSize: 18
                 font.weight: Font.DemiBold
                 color: "#FFFFFF"
-
-
             }
         }
 
